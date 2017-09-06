@@ -182,7 +182,7 @@ const dates =
         {
             "id": 1,
             "project_id": 1,
-            "date": "2017-08-08",
+            "date": "2017-09-01",
             "tasks": [
                 { "name": "Coding", "hours": 4 },
                 { "name": "Testing", "hours": 3.5 }
@@ -191,7 +191,7 @@ const dates =
         {
             "id": 2,
             "project_id": 1,
-            "date": "2017-08-09",
+            "date": "2017-09-02",
             "tasks": [
                 { "name": "Coding", "hours": 2.3 },
                 { "name": "Testing", "hours": 3.5 },
@@ -201,7 +201,7 @@ const dates =
         {
             "id": 3,
             "project_id": 2,
-            "date": "2017-08-18",
+            "date": "2017-09-01",
             "tasks": [
                 { "name": "Analyzing", "hours": 3 },
                 { "name": "Coding", "hours": 4 },
@@ -211,7 +211,7 @@ const dates =
         {
             "id": 4,
             "project_id": 2,
-            "date": "2017-08-19",
+            "date": "2017-09-02",
             "tasks": [
                 { "name": "Analyzing", "hours": 1 },
                 { "name": "Coding", "hours": 8.3 }
@@ -220,7 +220,7 @@ const dates =
         {
             "id": 5,
             "project_id": 2,
-            "date": "2017-08-20",
+            "date": "2017-09-03",
             "tasks": [
                 { "name": "Coding", "hours": 4 },
                 { "name": "Testing", "hours": 5.5 }
@@ -229,7 +229,7 @@ const dates =
         {
             "id": 6,
             "project_id": 2,
-            "date": "2017-08-21",
+            "date": "2017-09-04",
             "tasks": [
                 { "name": "Testing", "hours": 8 }
             ]
@@ -237,7 +237,7 @@ const dates =
         {
             "id": 7,
             "project_id": 2,
-            "date": "2017-08-22",
+            "date": "2017-09-05",
             "tasks": [
                 { "name": "Maintaining", "hours": 11.8 }
             ]
@@ -245,7 +245,7 @@ const dates =
         {
             "id": 8,
             "project_id": 2,
-            "date": "2017-08-23",
+            "date": "2017-09-06",
             "tasks": [
 
             ]
