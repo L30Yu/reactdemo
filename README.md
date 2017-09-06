@@ -1,10 +1,10 @@
 React Demo
 ==
 
-
+`
 git clone https://github.com/L30Yu/reactdemo.git
-==
-
+npm install
+`
 npm start
 ==
 
