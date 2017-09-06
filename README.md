@@ -19,6 +19,24 @@ goto localhost:3000
 ==
 sample username: aa@aa.com   password: aaaaaaaa
 
+
+Some Details:
+==
+- Project page 
+  - could filter the tasks and logged hours by picked date.
+  - not using data from datebase. Used 2 array objects in frontend.
+  - add new project and add new tasks not finished yet.
+  
+- Authentication
+  - Finished by server side
+  - User data saved in MongoDB with mLab cloud mongodb service (https://mlab.com/).
+  - Validation finished by server side, could add validation in front end.
+  
+- Documentation
+  - Not finished
+
+
+
 Login Page Preview:
 ==
 ![login](https://user-images.githubusercontent.com/12931325/30132316-31c2feec-930d-11e7-93e4-d7c77b72ab37.PNG)
