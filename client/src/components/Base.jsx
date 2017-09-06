@@ -24,7 +24,7 @@ const Base = ({ children }) => (
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
             >
               <MenuItem primaryText="User Info" containerElement={<Link to="/user" />}></MenuItem>
-              <MenuItem primaryText="Projects" containerElement={<Link to="/projects" />}></MenuItem>
+              <MenuItem primaryText="Projects" containerElement={<Link to="/" />}></MenuItem>
               <MenuItem primaryText="Sign Out" containerElement={<Link to="/logout" />}></MenuItem>
             </IconMenu>
         </div>

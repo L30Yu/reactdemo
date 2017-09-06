@@ -10,7 +10,7 @@ router.get('/dashboard', (req, res) => {
 });
 
 router.get('/user', (req, res) => {
-  
+  console.log(req.body);
   User.find({}, function(err, users) {
 		res.status(200).json(Object.assign({}, users, {message: "This is from server, user page"}));
 	});

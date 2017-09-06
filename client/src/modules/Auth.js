@@ -7,8 +7,11 @@ class Auth {
    */
   static authenticateUser(token, other) {
     localStorage.setItem('token', token);
-    if(other.user != null)
-      localStorage.setItem('user', other.user);
+    if(other.user != null){
+      localStorage.setItem('user', other.user.name);
+      localStorage.setItem('email', other.user.email);
+    }
+    
   }
 
   /**
@@ -47,6 +50,15 @@ class Auth {
 
   static getUser() {
     return localStorage.getItem('user');
+  }
+  /**
+   * Get the user object.
+   *
+   * @returns {string}
+   */
+
+  static getUserEmail() {
+    return localStorage.getItem('email');
   }
 }
 
