@@ -23,8 +23,8 @@ sample username: aa@aa.com   password: aaaaaaaa
 Some Details:
 ==
 - Project page 
-  - container : client/src/containers/ProjectsPage.jsx 
-  - component : client/src/components/Projects.jsx
+  - container ProjectsPage.jsx in client/src/containers/ProjectsPage.jsx 
+  - component Projects.jsx in client/src/components/Projects.jsx
   - could filter the tasks and logged hours by picked date.
   - not using data from datebase. Used 2 array objects in frontend.
   - add new project and add new tasks not finished yet.
