@@ -48255,6 +48255,10 @@
 
 	var _Dialog2 = _interopRequireDefault(_Dialog);
 
+	var _DialogForm = __webpack_require__(548);
+
+	var _DialogForm2 = _interopRequireDefault(_DialogForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -48280,8 +48284,17 @@
 	            dates: [],
 	            tabValue: 'a',
 	            pickedDate: null,
-	            openDialog: false
+	            openDialog: false,
+	            dialogContent: { title: '', date: '' }
 	        };
+
+	        _this.handleTabChange = _this.handleTabChange.bind(_this);
+	        _this.handlePickDate = _this.handlePickDate.bind(_this);
+	        _this.handleClearDate = _this.handleClearDate.bind(_this);
+	        _this.handleAddProject = _this.handleAddProject.bind(_this);
+	        _this.handleAddTask = _this.handleAddTask.bind(_this);
+	        _this.handleAddTaskInForm = _this.handleAddTaskInForm.bind(_this);
+	        _this.handleAddHoursInForm = _this.handleAddHoursInForm.bind(_this);
 	        return _this;
 	    }
 
@@ -48292,6 +48305,12 @@
 	                tabValue: value
 	            });
 	        }
+	    }, {
+	        key: 'handleAddTaskInForm',
+	        value: function handleAddTaskInForm() {}
+	    }, {
+	        key: 'handleAddHoursInForm',
+	        value: function handleAddHoursInForm() {}
 	    }, {
 	        key: 'handlePickDate',
 	        value: function handlePickDate(e, value) {
@@ -48331,8 +48350,10 @@
 	            this.setState({
 	                dates: tmpDates,
 	                projects: tmpProjects,
-	                pickedDate: value
+	                pickedDate: value,
+	                dialogContent: Object.assign({}, this.state.dialogContent, { date: tmpValue })
 	            });
+	            console.log('dialog date:', this.state.dialogContent.date);
 	        }
 	    }, {
 	        key: 'handleClearDate',
@@ -48340,7 +48361,8 @@
 	            this.setState({
 	                pickedDate: null,
 	                projects: projects,
-	                dates: dates
+	                dates: dates,
+	                dialogContent: { title: '', tasks: [], date: '' }
 	            });
 	        }
 
@@ -48357,32 +48379,29 @@
 	            });
 	        }
 	    }, {
-	        key: 'handleCloseDialog',
-	        value: function handleCloseDialog() {
-	            this.setState({
-	                openDialog: false
-	            });
-	        }
-	    }, {
-	        key: 'handleOpenDialog',
-	        value: function handleOpenDialog() {
+	        key: 'handleAddTask',
+	        value: function handleAddTask(id) {
 	            if (this.state.pickedDate == null) {
 	                alert('Pick a date first please !');
 	                return;
 	            }
 	            this.setState({
-	                openDialog: true
+	                openDialog: !this.state.openDialog,
+	                dialogContent: Object.assign({}, this.state.dialogContent, { title: 'Add Tasks in ' + this.state.projects.filter(function (p) {
+	                        return p.id == id;
+	                    })[0].name })
 	            });
 	        }
 	    }, {
-	        key: 'handleNewTask',
-	        value: function handleNewTask(value) {
+	        key: 'handleAddProject',
+	        value: function handleAddProject() {
 	            if (this.state.pickedDate == null) {
 	                alert('Pick a date first please !');
 	                return;
 	            }
 	            this.setState({
-	                openDialog: true
+	                openDialog: !this.state.openDialog,
+	                dialogContent: Object.assign({}, this.state.dialogContent, { title: 'Add Project' })
 	            });
 	        }
 
@@ -48398,7 +48417,7 @@
 	            var actions = [_react2.default.createElement(_FlatButton2.default, {
 	                label: 'Submit',
 	                primary: true,
-	                onClick: this.handleCloseDialog.bind(this)
+	                onClick: this.handleAddProject
 	            })];
 
 	            return _react2.default.createElement(
@@ -48416,21 +48435,21 @@
 	                        _react2.default.createElement(
 	                            'div',
 	                            null,
-	                            _react2.default.createElement(_RaisedButton2.default, { label: 'Add Project', primary: true, onClick: this.handleOpenDialog.bind(this) }),
+	                            _react2.default.createElement(_RaisedButton2.default, { label: 'Add Project', primary: true, onClick: this.handleAddProject }),
 	                            _react2.default.createElement(
 	                                _Dialog2.default,
 	                                {
-	                                    title: 'Dialog With Date Picker',
+	                                    title: this.state.dialogContent.title,
 	                                    actions: actions,
 	                                    modal: false,
 	                                    open: this.state.openDialog,
-	                                    onRequestClose: this.handleCloseDialog.bind(this)
+	                                    onRequestClose: this.handleAddProject
 	                                },
-	                                'Create a new project.'
+	                                this.state.dialogContent.date.length > 0 && _react2.default.createElement(_FlatButton2.default, { label: this.state.dialogContent.date, primary: true })
 	                            )
 	                        ),
-	                        _react2.default.createElement(_DatePicker2.default, { inputStyle: { textAlign: 'center' }, autoOk: true, hintText: 'Pick a Date', value: this.state.pickedDate, onChange: this.handlePickDate.bind(this) }),
-	                        !!this.state.pickedDate ? _react2.default.createElement(_RaisedButton2.default, { label: ' X Clear Date', onClick: this.handleClearDate.bind(this), secondary: true }) : ''
+	                        _react2.default.createElement(_DatePicker2.default, { inputStyle: { textAlign: 'center' }, autoOk: true, hintText: 'Pick a Date', value: this.state.pickedDate, onChange: this.handlePickDate }),
+	                        !!this.state.pickedDate && _react2.default.createElement(_RaisedButton2.default, { label: ' X Clear Date', onClick: this.handleClearDate, secondary: true })
 	                    )
 	                ),
 	                this.state.projects.map(function (item) {
@@ -48439,8 +48458,8 @@
 	                        key: item.id,
 	                        detail: item,
 	                        pickedDate: _this2.state.pickedDate,
-	                        handleTabChange: _this2.handleTabChange.bind(_this2),
-	                        handleNewTask: _this2.handleNewTask.bind(_this2),
+	                        handleTabChange: _this2.handleTabChange,
+	                        handleNewTask: _this2.handleAddTask.bind(_this2, item.id),
 	                        dates: _this2.state.dates.filter(function (date) {
 	                            return date.tasks.length > 0 && date.project_id === item.id;
 	                        }) });
@@ -57470,6 +57489,110 @@
 	} : void 0;
 	exports.default = PopoverAnimationVertical;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+/* 548 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(338);
+
+	var _Card = __webpack_require__(468);
+
+	var _RaisedButton = __webpack_require__(484);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	var _TextField = __webpack_require__(486);
+
+	var _TextField2 = _interopRequireDefault(_TextField);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var DialogForm = function DialogForm(_ref) {
+	  var projects = _ref.projects,
+	      dates = _ref.dates,
+	      handleAddTaskInForm = _ref.handleAddTaskInForm,
+	      handleAddHoursInForm = _ref.handleAddHoursInForm;
+	  return _react2.default.createElement(
+	    _Card.Card,
+	    { className: 'container' },
+	    _react2.default.createElement(
+	      'form',
+	      { action: '/', onSubmit: onSubmit },
+	      _react2.default.createElement(
+	        'h2',
+	        { className: 'card-heading' },
+	        'Sign Up'
+	      ),
+	      errors.summary && _react2.default.createElement(
+	        'p',
+	        { className: 'error-message' },
+	        errors.summary
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'field-line' },
+	        _react2.default.createElement(_TextField2.default, {
+	          floatingLabelText: 'Name',
+	          name: 'name',
+	          errorText: errors.name,
+	          onChange: onChange,
+	          value: tasks.name
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'field-line' },
+	        _react2.default.createElement(_TextField2.default, {
+	          floatingLabelText: 'Email',
+	          name: 'email',
+	          errorText: errors.email,
+	          onChange: onChange,
+	          value: tasks.email
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'field-line' },
+	        _react2.default.createElement(_TextField2.default, {
+	          floatingLabelText: 'Password',
+	          type: 'password',
+	          name: 'password',
+	          onChange: onChange,
+	          errorText: errors.password,
+	          value: tasks.password
+	        })
+	      ),
+	      _react2.default.createElement(
+	        'div',
+	        { className: 'button-line' },
+	        _react2.default.createElement(_RaisedButton2.default, { type: 'submit', label: 'Create New Account', primary: true })
+	      ),
+	      _react2.default.createElement(
+	        _Card.CardText,
+	        null,
+	        'Already have an account? ',
+	        _react2.default.createElement(
+	          _reactRouter.Link,
+	          { to: '/login' },
+	          'Log in'
+	        )
+	      )
+	    )
+	  );
+	};
+
+	exports.default = DialogForm;
 
 /***/ })
 /******/ ]);

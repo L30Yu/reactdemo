@@ -7,7 +7,7 @@ import DatePicker from 'material-ui/DatePicker';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
-
+import DialogForm from '../components/DialogForm.jsx'
 
 
 
@@ -25,14 +25,31 @@ class ProjectsPage extends React.Component {
             dates: [],
             tabValue: 'a',
             pickedDate: null,
-            openDialog: false
+            openDialog: false,
+            dialogContent: {title: '', date: ''}
         };
+
+        this.handleTabChange    = this.handleTabChange.bind(this);
+        this.handlePickDate     = this.handlePickDate.bind(this);
+        this.handleClearDate    = this.handleClearDate.bind(this);
+        this.handleAddProject   = this.handleAddProject.bind(this);
+        this.handleAddTask      = this.handleAddTask.bind(this); 
+        this.handleAddTaskInForm= this.handleAddTaskInForm.bind(this);   
+        this.handleAddHoursInForm= this.handleAddHoursInForm.bind(this);   
     }
 
     handleTabChange(value) {
         this.setState({
             tabValue: value
         });
+    }
+
+    handleAddTaskInForm(){
+
+    }
+
+    handleAddHoursInForm(){
+
     }
 
     handlePickDate(e, value) {
@@ -70,15 +87,18 @@ class ProjectsPage extends React.Component {
         this.setState({
             dates: tmpDates,
             projects: tmpProjects,
-            pickedDate: value
+            pickedDate: value,
+            dialogContent: Object.assign({}, this.state.dialogContent, { date: tmpValue })
         })
+        console.log('dialog date:',this.state.dialogContent.date);
     }
 
     handleClearDate() {
         this.setState({
             pickedDate: null,
             projects: projects,
-            dates: dates
+            dates: dates,
+            dialogContent: {title: '', tasks:[], date: ''}
         })
     }
 
@@ -91,30 +111,26 @@ class ProjectsPage extends React.Component {
             dates: dates
         });
     }
-    handleCloseDialog(){
-        this.setState({
-            openDialog: false
-        });
-    }
 
-    handleOpenDialog(){
+    handleAddTask(id){
         if(this.state.pickedDate == null){
             alert('Pick a date first please !');
             return;
         }
         this.setState({
-            openDialog: true
+            openDialog: !this.state.openDialog,
+            dialogContent: Object.assign({}, this.state.dialogContent, {title: 'Add Tasks in '+this.state.projects.filter(p => p.id==id)[0].name})
         });
     }
 
-    
-    handleNewTask(value) {
+    handleAddProject(){
         if(this.state.pickedDate == null){
             alert('Pick a date first please !');
             return;
         }
         this.setState({
-            openDialog: true
+            openDialog: !this.state.openDialog,
+            dialogContent: Object.assign({}, this.state.dialogContent, {title: 'Add Project'})
         });
     }
 
@@ -126,7 +142,7 @@ class ProjectsPage extends React.Component {
             <FlatButton
               label="Submit"
               primary={true}
-              onClick={this.handleCloseDialog.bind(this)}
+              onClick={this.handleAddProject}
             />,
           ];
 
@@ -138,21 +154,23 @@ class ProjectsPage extends React.Component {
                     />
                     <CardActions>
                         <div>
-                            <RaisedButton label="Add Project" primary={true} onClick={this.handleOpenDialog.bind(this)}/>
+                            <RaisedButton label="Add Project" primary={true} onClick={this.handleAddProject}/>
                             <Dialog
-                                title="Dialog With Date Picker"
+                                title={this.state.dialogContent.title}
                                 actions={actions}
                                 modal={false}
                                 open={this.state.openDialog}
-                                onRequestClose={this.handleCloseDialog.bind(this)}
+                                onRequestClose={this.handleAddProject}
                                 >
-                                Create a new project.
+                                { (this.state.dialogContent.date.length>0) && <FlatButton label={this.state.dialogContent.date} primary={true} />}
+                                
+                                {/**<DialogForm projects={this.state.projects} dates={this.state.dates} handleAddTaskInForm={this.handleAddTaskInForm} handleAddHoursInForm={this.handleAddHoursInForm}/>*/}
                                 
                             </Dialog>
                         </div>
-                        <DatePicker inputStyle={{ textAlign: 'center' }} autoOk={true} hintText="Pick a Date" value={this.state.pickedDate} onChange={this.handlePickDate.bind(this)} />
+                        <DatePicker inputStyle={{ textAlign: 'center' }} autoOk={true} hintText="Pick a Date" value={this.state.pickedDate} onChange={this.handlePickDate} />
 
-                        {(!!this.state.pickedDate) ? (<RaisedButton label=" X Clear Date" onClick={this.handleClearDate.bind(this)} secondary={true} />) : ('')}
+                        {(!!this.state.pickedDate) && (<RaisedButton label=" X Clear Date" onClick={this.handleClearDate} secondary={true} />) }
 
                     </CardActions>
                 </Card>
@@ -162,8 +180,8 @@ class ProjectsPage extends React.Component {
                         key={item.id}
                         detail={item}
                         pickedDate={this.state.pickedDate}
-                        handleTabChange={this.handleTabChange.bind(this)}
-                        handleNewTask={this.handleNewTask.bind(this)}
+                        handleTabChange={this.handleTabChange}
+                        handleNewTask={this.handleAddTask.bind(this,item.id)}
                         dates={this.state.dates.filter(date => date.tasks.length > 0 && date.project_id === item.id)} />
                     );
                 })}
