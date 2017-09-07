@@ -1,4 +1,4 @@
-React Demo
+React Demo : http://138.197.144.82:3223/
 ==
 
 
@@ -15,9 +15,11 @@ npm start
 option: npm run bundle to update your changes in front end react code.
 
 
-goto localhost:3000
+goto localhost:3223
 ==
 sample username: aa@aa.com   password: aaaaaaaa
+
+h@h.com    pass:hhhhhhhh
 
 
 Some Details:
