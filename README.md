@@ -1,8 +1,3 @@
-React Demo : http://138.197.144.82:3223/
-==
-
-
-
 git clone https://github.com/L30Yu/reactdemo.git
 ==
 
